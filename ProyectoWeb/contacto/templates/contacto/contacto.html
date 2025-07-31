@@ -1,0 +1,45 @@
+{% extends "ProyectoWebApp/base.html" %}
+{% load static %}
+
+{% block content %}
+
+
+<div class="container d-flex align-items-center justify-content-center min-vh-100">
+    <div class="card shadow-lg border-0 rounded-4 p-4" style="max-width: 600px; width: 100%;">
+        <h2 class="text-center mb-4 text-primary fw-bold">Contáctanos</h2>
+
+        {% if request.GET.valido %}
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                <i class="bi bi-check-circle-fill"></i> Información enviada correctamente, gracias.
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Cerrar"></button>
+            </div>
+        {% elif request.GET.novalido %}
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                <i class="bi bi-exclamation-triangle-fill"></i> Ocurrió un error al enviar el mensaje. Inténtelo nuevamente.
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Cerrar"></button>
+            </div>
+        {% endif %}
+
+        <form action="" method="POST" novalidate>
+            {% csrf_token %}
+
+            {% for field in miFormulario %}
+                <div class="mb-3">
+                    <label for="{{ field.id_for_label }}" class="form-label fw-semibold">{{ field.label }}</label>
+                    {{ field }}
+                    {% if field.errors %}
+                        <div class="form-text text-danger">{{ field.errors|striptags }}</div>
+                    {% endif %}
+                </div>
+            {% endfor %}
+
+            <div class="d-grid">
+                <button type="submit" class="btn btn-primary btn-lg">
+                    <i class="bi bi-send-fill"></i> Enviar
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+{% endblock %}
