@@ -64,10 +64,5 @@ class OrdenCompra(models.Model):
     proveedor = models.ForeignKey(Proveedor, on_delete=models.CASCADE)
     empleado = models.ForeignKey(Empleado, on_delete=models.CASCADE)
     fecha_orden = models.DateTimeField(auto_now_add=True)
-
-
-
-class DetalleOrden(models.Model):
-    orden_compra = models.ForeignKey(OrdenCompra, on_delete=models.CASCADE)
-    producto = models.ForeignKey(Producto, on_delete=models.CASCADE)
-    cantidad = models.IntegerField()
+    producto = models.ForeignKey(Producto, on_delete=models.CASCADE, null=True)
+    cantidad = models.IntegerField(default=0)
